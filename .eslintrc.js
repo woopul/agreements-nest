@@ -5,7 +5,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'perfectionist'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -21,5 +21,32 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'perfectionist/sort-imports': 'error',
+    'perfectionist/sort-interfaces': [
+      'error',
+      {
+        type: 'natural',
+      },
+    ],
+    'perfectionist/sort-jsx-props': [
+      'error',
+      {
+        type: 'natural',
+      },
+    ],
+    'perfectionist/sort-object-types': [
+      'error',
+      {
+        type: 'natural',
+      },
+    ],
+    'perfectionist/sort-objects': [
+      'error',
+      {
+        type: 'natural',
+      },
+    ],
+    "react/no-unescaped-entities": "off",
+    'sort-keys': 'off',
   },
 };
