@@ -46,7 +46,7 @@ module.exports = {
         type: 'natural',
       },
     ],
-    "react/no-unescaped-entities": "off",
+    'react/no-unescaped-entities': 'off',
     'sort-keys': 'off',
   },
 };
