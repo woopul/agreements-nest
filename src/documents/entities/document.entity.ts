@@ -14,7 +14,7 @@ export class Document {
   @Column()
   title: string;
 
-  @Column('jsonb')
+  @Column('json')
   content: Record<string, any>;
 
   @Column({ nullable: true })
@@ -23,7 +23,6 @@ export class Document {
   @Column({ nullable: true })
   templateId: string;
 
-  @Column('jsonb')
   @CreateDateColumn()
   createdAt: Date;
 
