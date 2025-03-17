@@ -1,36 +1,38 @@
-import { Document } from '@/documents/entities/document.entity';
-import { Template } from '@/templates/entities/template.entity';
+import { DocumentFieldValue } from '@/documents/entities/document-field-value.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Template } from './template.entity';
+
 @Entity()
-export class User {
+export class TemplateField {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  email: string;
+  @Column()
+  type: string;
 
   @Column()
-  password: string;
+  name: string;
 
   @Column({ default: false })
-  isVerified: boolean;
+  isRequired: boolean;
 
-  @Column({ nullable: true })
-  verificationToken: string;
+  @Column()
+  templateFieldId: string;
 
-  @OneToMany(() => Template, (template) => template.owner)
+  @ManyToMany(() => Template, (template) => template.fields)
   templates: Template[];
 
-  @OneToMany(() => Document, (document) => document.owner)
-  documents: Document[];
+  @OneToMany(() => DocumentFieldValue, (fieldValue) => fieldValue.templateField)
+  fieldValues: DocumentFieldValue[];
 
   @CreateDateColumn({
     default: () => 'CURRENT_TIMESTAMP(6)',

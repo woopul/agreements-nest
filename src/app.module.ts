@@ -4,14 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DocumentsModule } from './documents/documents.module';
 import { IamModule } from './iam/iam.module';
+import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
   controllers: [AppController],
   imports: [
     ConfigModule.forRoot(),
-    UsersModule,
     TypeOrmModule.forRoot({
       autoLoadEntities: true,
       database: process.env.DB_NAME,
@@ -22,7 +23,10 @@ import { UsersModule } from './users/users.module';
       type: 'postgres',
       username: process.env.DB_USERNAME,
     }),
+    UsersModule,
     IamModule,
+    TemplatesModule,
+    DocumentsModule,
   ],
   providers: [AppService],
 })
