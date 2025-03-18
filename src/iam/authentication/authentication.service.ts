@@ -57,7 +57,6 @@ export class AuthenticationService {
       token,
       email,
     );
-    console.log('user', user);
     if (!user) {
       throw new BadRequestException('Invalid or expired verification token');
     }
@@ -72,6 +71,10 @@ export class AuthenticationService {
 
     if (!user) {
       throw new UnauthorizedException('User does not exists');
+    }
+
+    if (!user.isVerified) {
+      throw new UnauthorizedException('User not verified');
     }
 
     const isEqual = await this.hashingService.compare(
@@ -112,11 +115,7 @@ export class AuthenticationService {
     try {
       const { refreshTokenId, sub } = await this.jwtService.verifyAsync<
         Pick<ActiveUserData, 'sub'> & { refreshTokenId: string }
-      >(refreshTokenDto.refreshToken, {
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        secret: this.jwtConfiguration.secret,
-      });
+      >(refreshTokenDto.refreshToken, this.jwtConfiguration);
 
       const user = await this.usersRepository.findOneByOrFail({
         id: sub,
@@ -134,8 +133,9 @@ export class AuthenticationService {
       }
 
       return this.generateTokens(user);
-    } catch (err) {
-      if (err instanceof InvalidatedRefreshTokenError) {
+    } catch (error) {
+      console.log('[Error: AuthenticationService.refreshTokens]', error);
+      if (error instanceof InvalidatedRefreshTokenError) {
         throw new UnauthorizedException('Access denied');
       }
 
