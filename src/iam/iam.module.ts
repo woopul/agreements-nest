@@ -1,3 +1,4 @@
+import { RedisService } from '@/redis/redis.service';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -31,6 +32,7 @@ import { HashingService } from './hashing/hashing.service';
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
     },
+    RedisService,
     UsersRepository,
     RefreshTokenIdsStorage,
     AccessTokenGuard,
