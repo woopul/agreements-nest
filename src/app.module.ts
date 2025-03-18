@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DocumentsModule } from './documents/documents.module';
 import { IamModule } from './iam/iam.module';
+import { RedisModule } from './redis/redis.module';
 import { TemplatesModule } from './templates/templates.module';
 import { UsersModule } from './users/users.module';
 
@@ -23,6 +24,7 @@ import { UsersModule } from './users/users.module';
       type: 'postgres',
       username: process.env.DB_USERNAME,
     }),
+    RedisModule,
     UsersModule,
     IamModule,
     TemplatesModule,
