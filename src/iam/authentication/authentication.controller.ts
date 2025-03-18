@@ -7,14 +7,15 @@ import {
   HttpStatus,
   Post,
   Query,
+  Req,
   Res,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import { AuthenticationService } from './authentication.service';
 import { AUTH_TYPE } from './consts/auth-type.const';
 import { Auth } from './decodators/auth.decorator';
-import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 
@@ -53,7 +54,7 @@ export class AuthenticationController {
       await this.authenticationService.signIn(signInDto);
     response.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: true,
+      sameSite: 'strict',
       secure: true,
     });
 
@@ -61,16 +62,22 @@ export class AuthenticationController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('refresh-tokens')
+  @Get('refresh-tokens')
   async refreshTokens(
+    @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
-    @Body() refreshTokenDto: RefreshTokenDto,
   ) {
+    if (!request.cookies.refreshToken) {
+      throw new UnauthorizedException();
+    }
+
     const { accessToken, refreshToken } =
-      await this.authenticationService.refreshTokens(refreshTokenDto);
+      await this.authenticationService.refreshTokens({
+        refreshToken: request.cookies.refreshToken,
+      });
     response.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: true,
+      sameSite: 'strict',
       secure: true,
     });
 
