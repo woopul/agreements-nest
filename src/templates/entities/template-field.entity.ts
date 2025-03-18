@@ -17,6 +17,9 @@ export class TemplateField {
   id: string;
 
   @Column()
+  templateFieldId: string;
+
+  @Column()
   type: string;
 
   @Column()
@@ -24,9 +27,6 @@ export class TemplateField {
 
   @Column({ default: false })
   isRequired: boolean;
-
-  @Column()
-  templateFieldId: string;
 
   @ManyToMany(() => Template, (template) => template.fields)
   templates: Template[];
