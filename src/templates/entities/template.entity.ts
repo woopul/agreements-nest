@@ -22,6 +22,9 @@ export class Template {
   templateId: string;
 
   @Column()
+  name: string;
+
+  @Column()
   content: string;
 
   @Column({ default: false })
