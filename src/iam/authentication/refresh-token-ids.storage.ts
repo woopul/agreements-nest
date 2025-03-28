@@ -13,7 +13,6 @@ export class RefreshTokenIdsStorage {
 
   async validate(userId: string, tokenId: string): Promise<boolean> {
     const storedId = await this.redisService.get(this.getKey(userId));
-
     if (storedId !== tokenId) {
       throw new InvalidatedRefreshTokenError();
     }
