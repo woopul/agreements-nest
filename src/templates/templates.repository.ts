@@ -35,6 +35,7 @@ export class TemplatesRepository extends Repository<Template> {
   }
 
   async createTemplate(
+    // TODO: shouldn't we use entity instead of dto?
     createTemplateDto: CreateTemplateDto,
     queryRunner?: QueryRunner,
   ) {

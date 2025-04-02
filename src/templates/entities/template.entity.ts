@@ -30,6 +30,8 @@ export class Template {
   @Column({ default: false })
   isPublished: boolean;
 
+  // TODO: should there be a cascade here?
+  // Can't templates be shared between users?
   @ManyToOne(() => User, (user) => user.templates, {
     nullable: false,
     onDelete: 'CASCADE',

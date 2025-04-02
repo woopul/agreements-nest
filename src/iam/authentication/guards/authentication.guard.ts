@@ -13,6 +13,7 @@ import { AccessTokenGuard } from './access-token.guard';
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
   private static readonly defaultAuthType = AUTH_TYPE.Bearer;
+  // private static readonly defaultAuthType = AUTH_TYPE.None;
   private readonly authTypeGuardMap: Record<
     AuthType,
     CanActivate | CanActivate[]

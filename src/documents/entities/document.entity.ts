@@ -1,6 +1,7 @@
 import { Template } from '@/templates/entities/template.entity';
 import { User } from '@/users/entities/user.entity';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -21,6 +22,11 @@ export class Document {
     onDelete: 'CASCADE',
   })
   owner: User;
+
+  @Column({
+    nullable: false,
+  })
+  title: string;
 
   @OneToMany(() => DocumentFieldValue, (fieldValue) => fieldValue.document)
   fieldValues: DocumentFieldValue[];
