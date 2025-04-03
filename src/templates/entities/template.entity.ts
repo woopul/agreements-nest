@@ -32,6 +32,7 @@ export class Template {
 
   // TODO: should there be a cascade here?
   // Can't templates be shared between users?
+  // Besides shouldn't that be a many to many ?
   @ManyToOne(() => User, (user) => user.templates, {
     nullable: false,
     onDelete: 'CASCADE',
@@ -44,6 +45,8 @@ export class Template {
   })
   fields: TemplateField[];
 
+  // TODO: shouldn't that be one to many ?
+  // One template can point to many documents, not many templates can point to many documents...
   @ManyToMany(() => Document, (document) => document.template)
   documents: Document[];
 

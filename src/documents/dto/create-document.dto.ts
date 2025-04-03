@@ -22,6 +22,7 @@ export class CreateDocumentDto {
   @IsString()
   title: string;
 
+  // store each field value
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateFieldValueDto)
