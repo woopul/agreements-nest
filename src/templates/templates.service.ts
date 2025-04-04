@@ -48,9 +48,7 @@ export class TemplatesService {
       );
 
       const template = new Template();
-      template.owner = {
-        id: user.sub,
-      } as User;
+      template.owner = { id: user.sub } as User;
       template.name = createTemplateDto.name;
       template.content = createTemplateDto.content;
       template.fields = fields;
@@ -129,6 +127,7 @@ export class TemplatesService {
     return updateTemplateTemplateFields;
   }
 
+  // TODO: should we create template even though all fields are the same?
   async updateTemplate(user: ActiveUserData, templateDto: CreateTemplateDto) {
     const queryRunner =
       this.templatesRepository.manager.connection.createQueryRunner();
